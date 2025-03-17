@@ -45,10 +45,14 @@ const _Layout = () => {
           marginBottom: 10,
           height: 52,
           position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
           overflow: "hidden",
           borderWidth: 1,
           borderColor: "#0f0d23",
         },
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tabs.Screen
