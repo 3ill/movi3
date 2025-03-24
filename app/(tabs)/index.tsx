@@ -20,7 +20,9 @@ export default function Index() {
     autoFetch: true,
   });
 
-  const handleNavigate = () => {};
+  const handleNavigate = () => {
+    router.push("/search");
+  };
   return (
     <View className="flex-1 bg-primary">
       <Image source={images.bg} className="absolute w-full z-0" />
@@ -46,6 +48,8 @@ export default function Index() {
         ) : (
           <View className="flex-1 mt-5">
             <SearchBar
+              value=""
+              onChangeText={() => {}}
               onPress={handleNavigate}
               placeholder="Search for a movie"
             />
@@ -64,7 +68,7 @@ export default function Index() {
                   gap: 20,
                   paddingRight: 5,
                   marginBottom: 10,
-                  paddingVertical: 20,
+                  marginVertical: 20,
                 }}
                 className="mt-2 pb-32"
                 scrollEnabled={false}
