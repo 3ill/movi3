@@ -3,6 +3,7 @@ import SearchBar from "@/components/search_bar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
+import { updateSearchCount } from "@/services/appwrtie";
 import useFetch from "@/services/use-fetch";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
@@ -10,7 +11,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
-
   const {
     data: movies,
     loading: moviesLoading,
@@ -23,9 +23,18 @@ const Search = () => {
   });
 
   useEffect(() => {
+    const fetchedMovies: Movie[] = movies as any;
+
     const func = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovies();
+
+        if (fetchedMovies.length > 0) {
+          updateSearchCount({
+            movie: fetchedMovies[0],
+            query: searchQuery,
+          });
+        }
       } else {
         reset();
       }
