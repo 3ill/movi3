@@ -7,9 +7,21 @@ import { useRouter } from "expo-router";
 import useFetch from "@/services/use-fetch";
 import { fetchMovies } from "@/services/api";
 import MovieCard from "@/components/movie-card";
+import { getTrendingMovies } from "@/services/appwrtie";
 
 export default function Index() {
   const router = useRouter();
+  const {
+    data: trendingMovies,
+    loading: trendingMoviesLoading,
+    error: trendingMoviesError,
+  } = useFetch({
+    fetchFunction: () => getTrendingMovies() as Promise<any>,
+    autoFetch: true,
+  });
+
+  const typedTrendingMovies = trendingMovies as any as TrendingMovie[];
+  console.log(`Trending Movies: ${typedTrendingMovies?.length}`);
 
   const {
     data: movies,
