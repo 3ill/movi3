@@ -1,4 +1,4 @@
-import { expoConfig } from "@/config/configs";
+import { expoConfig } from "@/config/appwrite.config";
 import { Client, Databases, ID, Query } from "react-native-appwrite";
 
 interface IUpdateSearchCount {
