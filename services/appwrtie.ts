@@ -6,6 +6,9 @@ interface IUpdateSearchCount {
   movie: Movie;
 }
 
+const databaseId = expoConfig.getDatabaseId();
+const collectionId = expoConfig.getCollectionId();
+
 const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")
   .setProject(expoConfig.getProjectId());
@@ -16,9 +19,6 @@ export const updateSearchCount = async ({
   query,
   movie,
 }: IUpdateSearchCount) => {
-  const databaseId = expoConfig.getDatabaseId();
-  const collectionId = expoConfig.getCollectionId();
-
   try {
     const result = await database.listDocuments(databaseId, collectionId, [
       Query.equal("search_term", query),
@@ -50,5 +50,19 @@ export const updateSearchCount = async ({
       success: false,
       error: error.message,
     };
+  }
+};
+
+export const getTrendingMovies = async () => {
+  try {
+    const result = await database.listDocuments(databaseId, collectionId, [
+      Query.limit(5),
+      Query.orderDesc("count"),
+    ]);
+
+    return result.documents as unknown as TrendingMovie[];
+  } catch (error: any) {
+    console.error(error);
+    throw new Error(error.message);
   }
 };
